@@ -11,6 +11,10 @@ module Openlogi
       json_response["items"].map { |item| Openlogi::Item.new(item) }
     end
 
+    def item
+      Openlogi::Item.new(json_response)
+    end
+
     private
 
     def json_response

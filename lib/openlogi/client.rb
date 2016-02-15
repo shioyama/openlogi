@@ -20,12 +20,32 @@ module Openlogi
       end
     end
 
+    def create_item(item_params)
+      response = Response.new(post_request("items", item_params))
+
+      if response.success?
+        response.item
+      else
+        raise ResponseError
+      end
+    end
+
     private
 
     def get_request(resource)
+      make_request(:get, resource)
+    end
+
+    def post_request(resource, body)
+      make_request(:post, resource, body)
+    end
+
+    def make_request(method, resource, body=nil)
       Typhoeus::Request.new(
         URI.join(endpoint, "api/", resource),
-        method: :get,
+        method: method,
+        params: nil,
+        body: body,
         headers: {
           Accept: "application/json",
           Authorization: "Bearer #{access_token}"
