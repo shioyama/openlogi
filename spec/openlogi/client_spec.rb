@@ -97,7 +97,7 @@ describe Openlogi::Client do
 
       it_behaves_like "request with valid headers"
 
-      it "returns item" do
+      it "creates item" do
         returned_item = do_request
 
         expect(stub).to have_been_requested
@@ -106,6 +106,23 @@ describe Openlogi::Client do
         expect(returned_item.name).to eq("Test Item")
         expect(returned_item.price).to eq(123)
         expect(returned_item.barcode).to eq("12345111")
+      end
+    end
+
+    describe "#destroy_item" do
+      let!(:stub) do
+        stub_request(:delete, "https://api-demo.openlogi.com/api/items/#{id}").
+          with { |request| @request = request }.to_return(body: item.to_json)
+      end
+      let(:do_request) { client.destroy_item(id) }
+
+      it_behaves_like "request with valid headers"
+
+      it "deletes item" do
+        returned_item = do_request
+
+        expect(stub).to have_been_requested
+        expect(returned_item.code).to eq("testcode")
       end
     end
   end
