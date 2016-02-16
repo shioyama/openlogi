@@ -19,7 +19,7 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-client = Openlogi::Client.new("apikey", 123)
+client = Openlogi::Client.new("apikey")
 client.get_items
 #=> [#<Openlogi::Item:0x005622970fc7c8
 #  @barcode="12345111",
