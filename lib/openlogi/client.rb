@@ -53,6 +53,7 @@ module Openlogi
         body: body,
         headers: {
           Accept: "application/json",
+          'X-Api-Version': "1.3",
           Authorization: "Bearer #{access_token}"
         }
       ).run

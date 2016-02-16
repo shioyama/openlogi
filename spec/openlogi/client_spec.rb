@@ -17,6 +17,7 @@ describe Openlogi::Client do
 
       expect(@request.headers["Authorization"]).to eq("Bearer #{access_token}")
       expect(@request.headers["Accept"]).to eq("application/json")
+      expect(@request.headers["X-Api-Version"]).to eq("1.3")
     end
 
     it "returns items" do
