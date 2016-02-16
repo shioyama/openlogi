@@ -187,6 +187,60 @@ describe Openlogi::Client do
     end
   end
 
+  describe "warehousings endpoint" do
+    let(:id) { "AB001-W000" }
+    let(:warehousing) do
+      {
+        "id": id,
+        "status": "waiting",
+        "memo": "Test memo",
+        "tracking_codes": [
+          "TrackingCode001",
+          "TrackingCode002"
+        ],
+        "items": [
+          {
+            "id": "AB001-I00001",
+            "code": "DQ001",
+            "name": "やくそう",
+            "quantity": 20
+          }
+        ]
+      }
+    end
+    let(:warehousings) { [ warehousing ] }
+
+    describe "#get_warehousings" do
+      let!(:stub) do
+        stub_request(:get, "https://api-demo.openlogi.com/api/warehousings").
+          with { |request| @request = request }.to_return(body: { "warehousings" => warehousings }.to_json)
+      end
+      let(:do_request) { client.get_warehousings }
+
+      it_behaves_like "request with valid headers"
+
+      it "returns warehousings" do
+        returned_warehousings = do_request
+
+        expect(stub).to have_been_requested
+        expect(returned_warehousings.size).to eq(1)
+
+        returned_warehousing = returned_warehousings.first
+        expect(returned_warehousing.id).to eq(id)
+        expect(returned_warehousing.status).to eq("waiting")
+        expect(returned_warehousing.memo).to eq("Test memo")
+        expect(returned_warehousing.tracking_codes).to eq(["TrackingCode001", "TrackingCode002"])
+
+        items = returned_warehousing.items
+        expect(items.count).to eq(1)
+        expect(items.first.id).to eq("AB001-I00001")
+        expect(items.first.code).to eq("DQ001")
+        expect(items.first.name).to eq("やくそう")
+        expect(items.first.quantity).to eq(20)
+      end
+    end
+  end
+
   describe "#endpoint" do
     it "returns test point endpoint when test mode is false" do
       client = Openlogi::Client.new("abc")
