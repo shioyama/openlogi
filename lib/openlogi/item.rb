@@ -3,11 +3,7 @@ module Openlogi
     attr_accessor :id, :code, :name, :price, :barcode
 
     def initialize(hash)
-      @id = hash["id"]
-      @code = hash["code"]
-      @name = hash["name"]
-      @price = hash["price"]
-      @barcode = hash["barcode"]
+      hash.each { |k,v| self.public_send("#{k}=", v) }
     end
   end
 end
