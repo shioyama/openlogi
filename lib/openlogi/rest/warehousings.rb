@@ -11,8 +11,8 @@ module Openlogi
         perform_request_with_objects(:get, "warehousings", {}, Openlogi::Warehousing)
       end
 
-      def create_warehousing(item_params)
-        perform_request_with_object(:post, "warehousings", item_params, Openlogi::Warehousing)
+      def create_warehousing(warehousing_params)
+        perform_request_with_object(:post, "warehousings", warehousing_params, Openlogi::Warehousing)
       end
     end
   end
