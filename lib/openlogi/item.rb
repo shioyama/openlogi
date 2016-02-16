@@ -1,11 +1,7 @@
-module Openlogi
-  class Item
-    attr_accessor :id, :code, :name, :price, :barcode
+require "openlogi/base_object"
 
-    def initialize(options = {})
-      options.each do |key, value|
-        instance_variable_set("@#{key}", value)
-      end
-    end
+module Openlogi
+  class Item < BaseObject
+    attr_accessor :id, :code, :name, :price, :barcode
   end
 end

@@ -1,6 +1,8 @@
 module Openlogi
   class Client
     include Openlogi::REST::Items
+    include Openlogi::REST::Warehousings
+    include Openlogi::REST::Shipments
 
     attr_reader :access_token, :test_mode
 

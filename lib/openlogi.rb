@@ -4,8 +4,12 @@ require "json"
 require "active_support/core_ext/module/delegation"
 
 require "openlogi/rest/items"
+require "openlogi/rest/warehousings"
+require "openlogi/rest/shipments"
 
 require "openlogi/item"
+require "openlogi/warehousing"
+require "openlogi/shipment"
 require "openlogi/request"
 require "openlogi/response"
 require "openlogi/client"
