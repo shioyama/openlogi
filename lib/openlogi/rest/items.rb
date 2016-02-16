@@ -5,12 +5,14 @@ module Openlogi
     module Items
       include Openlogi::REST::Utils
 
-      def get_item(id)
-        perform_request_with_object(:get, "items/#{id}", {}, Openlogi::Item)
+      def get_item(id, stock: false)
+        params = stock ? { stock: stock } : {}
+        perform_request_with_object(:get, "items/#{id}", params, Openlogi::Item)
       end
 
-      def get_items
-        perform_request_with_objects(:get, "items", {}, Openlogi::Item)
+      def get_items(stock: false)
+        params = stock ? { stock: stock } : {}
+        perform_request_with_objects(:get, "items", params, Openlogi::Item)
       end
 
       def update_item(id, item_params)

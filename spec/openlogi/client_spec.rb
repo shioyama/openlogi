@@ -43,6 +43,36 @@ describe Openlogi::Client do
         expect(stub).to have_been_requested
         expect(returned_item.code).to eq("testcode")
       end
+
+      context "with stock" do
+        let(:item) do
+          {
+            "id": id,
+            "code": "testcode",
+            "name": "Test Item",
+            "stock": {
+              "available": 2,
+              "shipping": 1,
+              "quantity": 3,
+              "size": "M",
+              "weight": 700
+            }
+          }
+        end
+
+        it "assigns stock" do
+          returned_item = do_request
+
+          expect(stub).to have_been_requested
+
+          stock = returned_item.stock
+          expect(stock.available).to eq(2)
+          expect(stock.shipping).to eq(1)
+          expect(stock.quantity).to eq(3)
+          expect(stock.size).to eq("M")
+          expect(stock.weight).to eq(700)
+        end
+      end
     end
 
     describe "#get_items" do
@@ -65,6 +95,36 @@ describe Openlogi::Client do
         expect(returned_item.name).to eq("Test Item")
         expect(returned_item.price).to eq(123)
         expect(returned_item.barcode).to eq("12345111")
+      end
+
+      context "with stock" do
+        let(:items) do
+          [{
+            "id": id,
+            "code": "testcode",
+            "name": "Test Item",
+            "stock": {
+              "available": 2,
+              "shipping": 1,
+              "quantity": 3,
+              "size": "M",
+              "weight": 700
+            }
+          }]
+        end
+
+        it "assigns stock" do
+          returned_items = do_request
+
+          expect(stub).to have_been_requested
+
+          stock = returned_items.first.stock
+          expect(stock.available).to eq(2)
+          expect(stock.shipping).to eq(1)
+          expect(stock.quantity).to eq(3)
+          expect(stock.size).to eq("M")
+          expect(stock.weight).to eq(700)
+        end
       end
     end
 
