@@ -10,13 +10,12 @@ module Openlogi
     end
 
     def perform
-      options_key = (method == :get ? :params : :body)
       response = Typhoeus::Request.new(
         URI.join(client.endpoint, "api/", resource),
         {
           method: method,
-          headers: headers,
-        }.merge(options_key => options)
+          headers: headers
+        }.merge(request_data)
       ).run
 
       Response.new(response)
@@ -24,9 +23,18 @@ module Openlogi
 
     private
 
+    def request_data
+      if method == :get
+        { params: options }
+      else
+        { body: options.to_json }
+      end
+    end
+
     def headers
       {
         Accept: "application/json",
+        'Content-Type': 'application/json',
         'X-Api-Version': "1.3",
         Authorization: "Bearer #{client.access_token}"
       }

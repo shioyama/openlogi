@@ -2,6 +2,7 @@ require "openlogi/version"
 require "typhoeus"
 require "json"
 require "active_support/core_ext/module/delegation"
+require "active_support/core_ext/hash"
 
 require "openlogi/rest/items"
 require "openlogi/rest/warehousings"
