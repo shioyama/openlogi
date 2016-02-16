@@ -19,6 +19,4 @@ module Openlogi
       test_mode? ? "https://api-demo.openlogi.com" : "https://api.openlogi.com"
     end
   end
-
-  class ResponseError < StandardError; end
 end
