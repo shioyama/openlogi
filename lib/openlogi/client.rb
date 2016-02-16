@@ -1,13 +1,18 @@
 module Openlogi
   class Client
-    attr_reader :access_token
+    attr_reader :access_token, :test_mode
 
-    def initialize(access_token)
+    def initialize(access_token, test_mode: true)
       @access_token = access_token
+      @test_mode = test_mode
+    end
+
+    def test_mode?
+      !!test_mode
     end
 
     def endpoint
-      "https://api-demo.openlogi.com"
+      test_mode? ? "https://api-demo.openlogi.com" : "https://api.openlogi.com"
     end
 
     def get_items

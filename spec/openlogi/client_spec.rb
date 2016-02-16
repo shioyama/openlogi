@@ -57,4 +57,16 @@ describe Openlogi::Client do
       expect(item.barcode).to eq("12345111")
     end
   end
+
+  describe "#endpoint" do
+    it "returns test point endpoint when test mode is false" do
+      client = Openlogi::Client.new("abc")
+      expect(client.endpoint).to eq("https://api-demo.openlogi.com")
+    end
+
+    it "returns production endpoint when test mode is true" do
+      client = Openlogi::Client.new("abc", test_mode: false)
+      expect(client.endpoint).to eq("https://api.openlogi.com")
+    end
+  end
 end
