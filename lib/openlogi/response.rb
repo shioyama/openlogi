@@ -1,18 +1,13 @@
 module Openlogi
   class Response
+    include Enumerable
+
     attr_reader :response
     delegate :success?, to: :response
+    delegate :each, :fetch, to: :json_response
 
     def initialize(response)
       @response = response
-    end
-
-    def items
-      json_response["items"].map { |item| Openlogi::Item.new(item) }
-    end
-
-    def item
-      Openlogi::Item.new(json_response)
     end
 
     private
